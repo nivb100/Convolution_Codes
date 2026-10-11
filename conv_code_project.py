@@ -15,6 +15,7 @@ class Trellis_Cell():
         self.timestamp          = ts
         self.acumulative_metric = 0
         self.prev_optimal_state = -1
+        self.prev_optimal_input = -1 # This input is related to prev_optimal_state
 
 # BPSK Modulation 
 def mod_bpsk(x):
@@ -295,10 +296,11 @@ def viterbi_decoding_metric(rx_symbols, k, n, trellis_next_state, trellis_output
     for t in range(1, time_units+1):
         for state in range(num_states):
             accumulated_metric = np.ones(num_states)*math.inf
+            chosen_input       = np.ones(num_states)*(-1)
             # print("t={} state={}".format(t, state))
             for prev_state in range(num_states):
                 
-                for input_v in range(num_inputs): # would be fixed for k>1
+                for input_v in range(num_inputs): 
                     input_vec_val = input_v
                     if(trellis_next_state[prev_state][input_vec_val] == state):
                         ts_rx_symbols      = rx_symbols[(t-1)*n:t*n] 
@@ -307,6 +309,8 @@ def viterbi_decoding_metric(rx_symbols, k, n, trellis_next_state, trellis_output
                                                          calc_branch_metric
                         if(lcl_accumulated_metric < accumulated_metric[prev_state]):
                             accumulated_metric[prev_state] = lcl_accumulated_metric
+                            # For many inputs to the same state - save it for being optimal input
+                            chosen_input[prev_state]       = input_vec_val           
                         # print("ts_rx_symbols=", ts_rx_symbols)
                         # print("trellis_output[prev_state={}][bit={}]={}".format(prev_state, bit, trellis_output[prev_state][bit]))
                         # print("calc_branch_metric(prev_state={})(curr_state={})(bit={})={}".format(prev_state,state,bit,calc_branch_metric))
@@ -315,6 +319,7 @@ def viterbi_decoding_metric(rx_symbols, k, n, trellis_next_state, trellis_output
             # find the min and apply on the trellis array
             opt_state                                  = np.argmin(accumulated_metric)
             trellis_array[state][t].prev_optimal_state = int(opt_state)
+            trellis_array[state][t].prev_optimal_input = chosen_input[opt_state]
             trellis_array[state][t].acumulative_metric = accumulated_metric[opt_state]
             # print("opt_state[t={}]={}".format(t, opt_state))
     
@@ -324,10 +329,11 @@ def viterbi_decoding_metric(rx_symbols, k, n, trellis_next_state, trellis_output
     # Reconstructing u_opt and rx_ml_opt
     for t in range(time_units-1, -1, -1): # including t=0
         # print("t=",t)
-        state    = s_opt[t+1]
-        s_opt[t] = trellis_array[state][t+1].prev_optimal_state
+        state     = s_opt[t+1]
+        s_opt[t]  = trellis_array[state][t+1].prev_optimal_state
+        opt_input = trellis_array[state][t+1].prev_optimal_input
         for u in range(num_inputs):
-            if(trellis_next_state[s_opt[t]][u] == state):
+            if((trellis_next_state[s_opt[t]][u] == state) and (u == opt_input)):
                 u_opt[t]                = decimal_to_bits(u, k)
                 rx_opt_seq[t*n:(t+1)*n] = trellis_output[s_opt[t]][u]
                 # print("rx_opt_seq[{}:{}]={}".format(t*n,(t+1)*n, trellis_output[s_opt[t]][u]))
