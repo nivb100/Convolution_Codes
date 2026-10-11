@@ -31,6 +31,7 @@ if (channel =="laplace"):
     plt.title(f'Bit Error Probability Vs $E_b/N_0$\nLaplace Channel $G_1$ Code')
 elif(channel =="gaussian"):
     plt.title(f'Bit Error Probability Vs $E_b/N_0$\nGaussian Channel $G_1$ Code')
+else:
     exit("error channel")
 plt.xlabel(f'$E_b/N_0(dB)$', fontsize=12)
 plt.ylabel(f'$P_b$', fontsize=12)
