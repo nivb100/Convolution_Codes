@@ -693,16 +693,3 @@ print(f'simulation_results_{channel}_{end_date}.csv Results Saved successfuly!')
 
 duration = end_date_cmpt - start_date_cmpt
 print("Simulation Duration:", duration)
-
-# # Plotting
-# plt.figure(figsize=(10,5))
-# plt.plot(times, Vm - 70, linewidth=2, label='Vm')
-# plt.plot(times, stim - 70, label = 'Stimuli (Scaled)', linewidth=2, color='sandybrown')
-# plt.ylabel("Membrane Potential (mV)", fontsize=15)
-# plt.xlabel('Time (msec)', fontsize=15)
-# plt.xlim([90,160])
-# plt.title("Hodgkin-Huxley Neuron Model", fontsize=15)
-# plt.text(150, 0, r'$E_k$={}'.format(hh.EK)+'\n'+r'$E_{{Na}}={}$'.format(hh.ENa)+'\n'+r'$E_{{leak}}={}$'.format(hh.EKleak), fontsize=12,
-#              bbox=dict(facecolor='white', alpha=0.5))
-# plt.legend(loc=1)
-# # plt.show()
