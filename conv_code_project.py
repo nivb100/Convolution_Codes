@@ -334,7 +334,9 @@ def viterbi_decoding_metric(rx_symbols, k, n, trellis_next_state, trellis_output
         opt_input = trellis_array[state][t+1].prev_optimal_input
         for u in range(num_inputs):
             if((trellis_next_state[s_opt[t]][u] == state) and (u == opt_input)):
-                u_opt[t]                = decimal_to_bits(u, k)
+                u_vec                   = decimal_to_bits(u, k) 
+                u_vec                   = u_vec[::-1]  # flip order that MSB will be latest in info_seq - like was in encoder(line 196)
+                u_opt[t]                = u_vec
                 rx_opt_seq[t*n:(t+1)*n] = trellis_output[s_opt[t]][u]
                 # print("rx_opt_seq[{}:{}]={}".format(t*n,(t+1)*n, trellis_output[s_opt[t]][u]))
 
@@ -556,7 +558,6 @@ for eb_n0 in Eb_N0_ls:
         # print(f'info_seq       ={info_seq}')
         error_vec = info_seq ^ u_opt_info_only
         # print(f'error_vec={error_vec}')
-        
         ########## Error probability per bit ##########
         # Summarizing the errors from previous loops with the current iteration errors
         num_errors = num_errors + sum(error_vec) 
