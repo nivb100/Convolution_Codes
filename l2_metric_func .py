@@ -1,6 +1,6 @@
 from pytictoc import TicToc
 import numpy as np
-
+# Comment
 def l2_metric(r,v):
     sum = 0
     for i in range(len(r)):
