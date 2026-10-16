@@ -1,9 +1,22 @@
 import matplotlib.pyplot as plt
 import numpy as np
+
+### **For the User** - Change it to 0 if you want to put your data after running the simulation (.npz file) ### 
+default_data = 1
+
 # Load the file data
-data = np.load("Simulation_results_laplace_2026-10-08_12-20-32.npz")
+if (default_data==1):
+    data = np.load("Simulation_results_laplace_2026-10-08_12-20-32.npz")
+else:
+    # **For the User** - Put your data file name here after completing the simulation
+        data = np.load("Sim_Results/empty_data_file.npz")
+    
+if len(data.files) == 0:
+    print(f'### Empty File ###\nLoad your data file or use the default_data=1 to load the default data file')
+    exit()
+
 # All the Variables names
-print(data.files)
+# print(data.files)
 
 print("G=",data['selected_G'])
 Eb_N0_db        = data['Eb_N0_db']
