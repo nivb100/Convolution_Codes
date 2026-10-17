@@ -1,15 +1,26 @@
+# --- Module: L2 Metric Performance Analysis ---
+# Compares iterative vs. optimized NumPy methods for squared L2 distance calculation.
+
 from pytictoc import TicToc
 import numpy as np
 
+# Calculates squared L2 distance (Iterative approach; no square root)
+# Input: r (ndarray), v (ndarray) | Returns: float
 def l2_metric(r,v):
     sum = 0
     for i in range(len(r)):
         sum = sum + np.square(r[i]-v[i])
     return sum
 
+# Calculates squared L2 distance with dot products, avoiding a Python loop
+# and temporary arrays; may be faster for large inputs.
+# Input: r (ndarray), v (ndarray) | Returns: float
 def l2_metric_opt1(r, v):
     return ((r @ r) + (v @ v) - 2*(r @ v))
 
+# Uses NumPy for element-wise subtraction and squaring instead of a Python loop;
+# built-in sum still reduces the results iteratively.
+# Input: r (ndarray), v (ndarray) | Returns: float
 def l2_metric_opt2(r, v):
     return sum(np.power(r-v,2))
 

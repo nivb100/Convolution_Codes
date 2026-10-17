@@ -1,12 +1,22 @@
+# --- Module: L1 Metric Performance Analysis ---
+# Compares iterative vs. optimized NumPy methods for L1 distance calculation.
+
 from pytictoc import TicToc
 import numpy as np
 
+# Calculates L1 distance (Iterative approach)
+# Input: r (ndarray), v (ndarray) | Returns: float
 def l1_metric(r, v):
     sum = 0
     for i in range(len(r)):
         sum = sum + np.abs(r[i]-v[i])
     return sum
 
+# Calculates L1 distance (Optimized NumPy approach)
+# NumPy computes differences and absolute values across the arrays in compiled
+# code, avoiding Python-level work for each element. This can be faster for
+# large arrays, though the built-in sum still reduces the results iteratively.
+# Input: r (ndarray), v (ndarray) | Returns: float
 def l1_metric_opt(r, v):
     return sum(np.abs(r-v))
 
