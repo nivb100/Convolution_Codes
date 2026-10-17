@@ -679,10 +679,10 @@ np.savez(f"Sim_Results/Simulation_results_{channel}_{end_date}.npz",
     N0_approx_ls     = N0_approx_ls,
     b_p_approx_ls    = b_p_approx_ls,
     P_b_approx_Z_g   = P_b_approx_Z_g,
-    P_b_approx_Z_lp  = P_b_approx_Z_lp
-    )
+    P_b_approx_Z_lp  = P_b_approx_Z_lp) 
 
-
+### For Debugging - Saving the results in a CSV file for easier reading ###
+"""
 print(f'Sim_Results/Simulation_results_{channel}_{end_date}.npz Results Saved successfuly!')
 
 df = pd.DataFrame({
@@ -693,10 +693,9 @@ df = pd.DataFrame({
     'Theor_P_b_G1'      : Theor_P_b_G1,
     'P_b'               : avg_p_b_list_cl,
     'Theor-P_b_Diff_G1' : Diff}   )
-
 df.to_csv(f'Sim_Results/Simulation_results_{channel}_{end_date}.csv', index=False)
 print(f'Sim_Results/Simulation_results_{channel}_{end_date}.csv Results Saved successfuly!')
-
+"""
 
 duration = end_date_cmpt - start_date_cmpt
 print("Simulation Duration:", duration)
