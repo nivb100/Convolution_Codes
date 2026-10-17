@@ -1,5 +1,7 @@
 # Convolutional Codes and Viterbi Decoding
 
+![Project Screenshot](./Images/Conv_Code_Project_Infographics.jpg)
+
 ## Overview
 
 This project implements and simulates convolutional coding systems in Python, focusing on error correction, Viterbi decoding, and bit error rate (BER) performance evaluation.
