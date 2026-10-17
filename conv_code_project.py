@@ -650,10 +650,6 @@ Z_lp_5_approx   = np.array([np.power(Z, 5) for Z in Z_lp_approx])
 P_b_approx_Z_lp = Z_lp_5_approx
 
 
-
-
-
-
 end_date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 end_date_cmpt = datetime.now()
 print(f"End Simualtion Time:{end_date}")
