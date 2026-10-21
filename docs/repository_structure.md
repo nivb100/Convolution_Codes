@@ -13,7 +13,7 @@ Convolution_Codes/
 ├── performance_gaussian_graph.py
 ├── performance_laplace_graph.py
 │
-├── Images/
+├── images/
 │
 ├── analysis/
 │   ├── channel_distributions/
