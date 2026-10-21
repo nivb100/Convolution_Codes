@@ -360,7 +360,6 @@ num_bits_for_polynom = 0 # default value if not using it
 # G(D) = [D, 1+D, D+D^2] - filled in octal representation & reversed represenatation - D^0 is the MSB
 G = np.array([2,6,3]) # bad represntation if don't know the number of bits all polynoms
 num_bits_for_polynom = 3
-
 # Alternative representation - G Will be 3D array - 1st dim k, 2nd dim n, 3rd dim - polynom powers
 # G = np.array([[[0,1,0], [1,1,0], [0,1,1]]])
 ######## Option 1 - k=1 ########
@@ -394,14 +393,17 @@ R = k/n
 print(f"k={k}, n={n}")
 print("G=",G)
 print("G(dims)=",G.shape)
+memory        = None # will be calulated later
+built_trellis = 0
 
 
 ########### Running on Eb_N0 Values ##############
-# Eb_N0_ls     = np.linspace(0, 8.2, 16) # The value 8.2 -> 6.249*10^-7 checked manually (for gaussian channel)
 if (channel == "laplace"):
-    Eb_N0_ls     = np.linspace(0, 10, 16)
+    EB_N0_END_POINT = 10
+    Eb_N0_ls     = np.linspace(0, EB_N0_END_POINT, 16)
 elif (channel == "gaussian"):
-    Eb_N0_ls     = np.linspace(0, 8.4, 16)
+    EB_N0_END_POINT = 8.4
+    Eb_N0_ls     = np.linspace(0, EB_N0_END_POINT, 16)
 else:
     exit("channel error")
 avg_p_b_list = []
@@ -464,10 +466,9 @@ for eb_n0 in Eb_N0_ls:
         # info_seq = np.array([1,0,1]) # Sanity Check
 
         ########## Calc Memory of the conv code ##########
-        memory            = calc_memory(G, num_bits_for_polynom)
+        memory            = memory if memory is not None else calc_memory(G, num_bits_for_polynom)
         constraint_length = memory + 1
         # print("memory=", memory)
-
         # Using this for finding the number of termination bits
         total_memory = max(memory)
 
@@ -476,11 +477,13 @@ for eb_n0 in Eb_N0_ls:
         sum_memory = sum(memory)
         num_states = np.power(2, sum_memory)
         num_inputs = np.power(2, k)
-        trellis_next_state = np.zeros((num_states,num_inputs), dtype=int)
-        trellis_outputs    = np.zeros((num_states,num_inputs, n), dtype=int)
-        trellis_next_state, trellis_outputs = build_trellis_fsm(memory, G, constraint_length, num_bits_for_polynom)
-        # print("trellis_states_fsm=\n", trellis_next_state)
-        # print("trellis_outputs_fsm=\n", trellis_outputs)
+        if built_trellis == 0:
+            trellis_next_state = np.zeros((num_states,num_inputs), dtype=int)
+            trellis_outputs    = np.zeros((num_states,num_inputs, n), dtype=int)
+            trellis_next_state, trellis_outputs = build_trellis_fsm(memory, G, constraint_length, num_bits_for_polynom)
+            built_trellis = 1
+            # print("trellis_states_fsm=\n", trellis_next_state)
+            # print("trellis_outputs_fsm=\n", trellis_outputs)
 
         """
         # golden reference check of encoding conv code
@@ -503,7 +506,8 @@ for eb_n0 in Eb_N0_ls:
         mod_seq    = mod_bpsk(encoded_seq)
         tx_symbols = mod_seq
 
-        trellis_outputs_bpsk = trellis_outputs # BPSK trellis_outputs for decoding algorithm
+        # BPSK trellis_outputs for decoding algorithm
+        trellis_outputs_bpsk = np.zeros_like(trellis_outputs)
         for i in range(trellis_outputs.shape[0]):
             for j in range(trellis_outputs.shape[1]):
                 trellis_outputs_bpsk[i][j] = mod_bpsk(trellis_outputs[i][j])
@@ -616,9 +620,9 @@ print("Diff=", Diff)
 
 ############ Approximation for High SNR - Eb_N0>>1  ############
 if(channel == 'laplace'):
-    Eb_N0_approx_ls = np.linspace(10, 12, 4)
+    Eb_N0_approx_ls = np.linspace(EB_N0_END_POINT, 12, 4)
 elif (channel == 'gaussian'):
-    Eb_N0_approx_ls = np.linspace(8.4, 10, 4)
+    Eb_N0_approx_ls = np.linspace(EB_N0_END_POINT, 10, 4)
 else:
     exit('channel error')
 Eb_N0_approx_ls = [float(x) for x in Eb_N0_approx_ls]
