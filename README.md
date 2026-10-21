@@ -1,40 +1,78 @@
 # Convolutional Codes and Viterbi Decoding
 
-![Project Screenshot](./Images/Conv_Code_Project_Infographics.jpg)
+![Project Infographic](./images/Conv_Code_Project_Infographics.jpg)
 
 ## Overview
 
 This project implements and simulates convolutional coding systems in Python, focusing on error correction, Viterbi decoding, and bit error rate (BER) performance evaluation.
 
-The project analyzes the performance of convolutional codes over two noisy channel models: **Additive White Gaussian Noise (AWGN)** and **Laplace noise**, examining their impact on decoding performance.
+The simulation evaluates convolutional coding performance over two noise models: **Additive White Gaussian Noise (AWGN)** and **Laplace noise**.
 
-## Project Objectives
+The project combines algorithm implementation, communication channel modeling, Monte Carlo simulation, and performance analysis.
 
-- Implement convolutional encoding and trellis representation.
-- Develop a Viterbi decoder for recovering transmitted information sequences.
-- Simulate transmission over Gaussian and Laplace noise channels.
-- Evaluate BER as a function of \(E_b/N_0\).
-- Analyze and compare simulation results across channel models.
+## Key Features
 
-## Key Topics
+- Convolutional encoding and trellis representation.
+- Viterbi decoding for information sequence recovery.
+- BPSK modulation and noisy channel simulation.
+- Gaussian and Laplace noise models.
+- BER performance evaluation as a function of \(E_b/N_0\).
+- Simulation result visualization and computational optimization analysis.
 
-- Convolutional Codes and Trellis Diagrams
-- Viterbi Decoding
-- Communication Channel Modeling
-- Monte Carlo Simulation
-- BER Performance Analysis
+## Simulation Results
 
-## Simulation and Results
+The project evaluates the BER under different channel conditions and \(E_b/N_0\) values.
 
-The simulation framework estimates BER by comparing transmitted information bits with decoded bits under different channel conditions and \(E_b/N_0\) values.
+Example simulation datasets and visualization scripts are included in the repository to support performance analysis and comparison between the channel models.
 
-The results provide insight into the error-correction performance of convolutional codes and the influence of different noise distributions on decoding performance.
+The main visualization scripts are:
+
+- `performance_gaussian_graph.py`
+- `performance_laplace_graph.py`
+
+## Quick Start
+
+### 1. Install Dependencies
+
+```bash
+git clone https://github.com/nivb100/Convolution_Codes.git
+cd Convolution_Codes
+python -m pip install -r requirements.txt
+```
+
+### 2. Run the Simulation
+
+```bash
+python conv_code_project.py
+```
+
+### 3. Visualize Results
+
+For Gaussian noise:
+
+```bash
+python performance_gaussian_graph.py
+```
+
+For Laplace noise:
+
+```bash
+python performance_laplace_graph.py
+```
+
+Before a long run, check the simulation parameters and the input/output paths configured in the scripts.
+
+## Repository Structure
+
+Supporting analysis scripts, images, simulation results, and the project report are organized in the repository.
+
+See [Repository Structure](./docs/repository_structure.md) for a description of the main files and directories.
 
 ## Project Report
 
-The complete technical report includes the theoretical background, mathematical derivations, algorithm development, simulation results, graphs, and conclusions.
+The full technical report covers the theoretical background, mathematical derivations, algorithm development, simulation methodology, performance graphs, results, and conclusions.
 
-**[Read the Full Project Report (PDF)](Convolutional_Codes_Project_Report_Hebrew.pdf)**
+**[Read the Full Project Report (PDF)](./Convolutional_Codes_Project_Report_Hebrew.pdf)**
 
 ## Technologies
 
@@ -44,4 +82,11 @@ The complete technical report includes the theoretical background, mathematical 
   <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Matplotlib_icon.svg" alt="Matplotlib" title="Matplotlib" height="50" width="42" />
 </p>
 
-##
+## Documentation
+
+- [Repository Structure Guide](./docs/repository_structure.md) — Directory organization and the purpose of the main project files.
+- [Technical Project Report (PDF)](./Convolutional_Codes_Project_Report_Hebrew.pdf) — Detailed theory, implementation, experiments, and conclusions.
+
+## Author
+
+An independent engineering project focused on convolutional error-correction codes, Viterbi decoding, communication channel modeling, and simulation-based performance analysis.

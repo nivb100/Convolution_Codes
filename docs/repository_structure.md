@@ -2,7 +2,7 @@
 
 This document describes the organization of the repository and the purpose of its main files and directories.
 
-The repository is organized to separate the main simulation, result visualization, supporting analysis tools, project assets, and generated simulation outputs.
+The repository is organized to separate the main simulation, result visualization, supporting analysis tools, project assets, documentation, and generated simulation outputs.
 
 ## 1. Directory Overview
 
@@ -17,9 +17,18 @@ Convolution_Codes/
 │
 ├── analysis/
 │   ├── channel_distributions/
+│   │   ├── samples_gaussian.py
+│   │   └── samples_laplace.py
+│   │
 │   └── optimization_func_analysis/
+│       ├── bin_to_dec_func.py
+│       ├── l1_metric_func.py
+│       └── l2_metric_func.py
 │
 ├── sim_results/
+│
+├── docs/
+│   └── repository_structure.md
 │
 ├── Simulation_results_gaussian_*.npz
 ├── Simulation_results_laplace_*.npz
@@ -50,7 +59,7 @@ Loads simulation data and visualizes performance results for the Laplace noise c
 
 The visualization scripts are separate from the main simulation, allowing previously generated datasets to be analyzed without necessarily rerunning the simulation.
 
-## 3. `Images/`
+## 3. `images/`
 
 Contains project-related visual assets, including:
 
@@ -68,6 +77,9 @@ Contains supporting analysis scripts that complement the main simulation.
 
 Contains Python scripts for constructing and plotting Gaussian and Laplace probability distributions.
 
+- `samples_gaussian.py` — Generates and plots samples from a Gaussian distribution.
+- `samples_laplace.py` — Generates and plots samples from a Laplace distribution.
+
 These scripts support the analysis and visualization of the noise models used in the simulation.
 
 ### `optimization_func_analysis/`
@@ -80,7 +92,7 @@ Contains analyses of alternative implementations of selected mathematical operat
 
 The purpose of these scripts is to investigate computational efficiency and alternative implementations using Python and NumPy operations.
 
-## 5. `Sim_results/`
+## 5. `sim_results/`
 
 Dedicated to newly generated simulation result files.
 
@@ -106,15 +118,13 @@ The report is the primary reference for the project's detailed theoretical and t
 
 ## 8. Dependencies and Documentation
 
-- **`requirements.txt`** — Lists the Python packages required by the project.
-- **`README.md`** — Provides the project overview, key features, and quick-start instructions.
-- **`docs/simulation_guide.md`** — Explains installation, simulation execution, visualization, and debugging.
-- **`docs/repository_structure.md`** — Describes the repository layout and the purpose of its main components.
-- **`.gitignore`** — Specifies files and directories that Git should exclude from version control.
+- `requirements.txt` — Lists the Python packages required by the project.
+- `README.md` — Provides the project overview, key features, and quick-start instructions.
+- `docs/repository_structure.md` — Describes the repository layout and the purpose of its main components.
+- `.gitignore` — Specifies files and directories that Git should exclude from version control.
 
 ## 9. Debugging Artifacts
 
 CSV files are used for debugging and detailed inspection of simulation data when required.
 
 They are not intended to be generated during every standard simulation run. Debugging artifacts should be kept separate from the normal simulation output workflow.
-
