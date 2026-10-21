@@ -1,0 +1,5 @@
+numpy
+matplotlib
+scikit-commpy==0.8.0
+pandas
+pytictoc
