@@ -658,7 +658,7 @@ end_date = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
 end_date_cmpt = datetime.now()
 print(f"End Simualtion Time:{end_date}")
 
-np.savez(f"Sim_Results/Simulation_results_{channel}_{end_date}.npz",
+np.savez(f"sim_results/Simulation_results_{channel}_{end_date}.npz",
     Eb_N0_db         = Eb_N0_ls,
     channel          = channel,
     selected_G       = G,
@@ -683,7 +683,7 @@ np.savez(f"Sim_Results/Simulation_results_{channel}_{end_date}.npz",
 
 ### For Debugging - Saving the results in a CSV file for easier reading ###
 """
-print(f'Sim_Results/Simulation_results_{channel}_{end_date}.npz Results Saved successfuly!')
+print(f'sim_Results/simulation_results_{channel}_{end_date}.npz Results Saved successfuly!')
 
 df = pd.DataFrame({
     'Eb_N0_db'          : Eb_N0_ls,
@@ -693,8 +693,8 @@ df = pd.DataFrame({
     'Theor_P_b_G1'      : Theor_P_b_G1,
     'P_b'               : avg_p_b_list_cl,
     'Theor-P_b_Diff_G1' : Diff}   )
-df.to_csv(f'Sim_Results/Simulation_results_{channel}_{end_date}.csv', index=False)
-print(f'Sim_Results/Simulation_results_{channel}_{end_date}.csv Results Saved successfuly!')
+df.to_csv(f'sim_results/Simulation_results_{channel}_{end_date}.csv', index=False)
+print(f'sim_results/Simulation_results_{channel}_{end_date}.csv Results Saved successfuly!')
 """
 
 duration = end_date_cmpt - start_date_cmpt
