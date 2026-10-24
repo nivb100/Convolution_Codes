@@ -10,6 +10,8 @@ The simulation evaluates convolutional coding performance over two noise models:
 
 The project combines algorithm implementation, communication channel modeling, Monte Carlo simulation, and performance analysis.
 
+(Implemented without Generative-AI - to show the "real skills" and coding abillities)
+
 ## Key Features
 
 - Convolutional encoding and trellis representation.
