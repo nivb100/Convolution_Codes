@@ -1,4 +1,4 @@
-# Convolutional Codes and Viterbi Decoding
+# Convolutional Codes and Viterbi Decoding (October 2026)
 
 ![Project Infographic](./images/Conv_Code_Project_Infographics.jpg)
 
