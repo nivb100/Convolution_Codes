@@ -92,10 +92,11 @@ def deg_poly(poly):
     degree       = bin_str_rev.rfind('1')
     return degree
 
-def build_trellis_fsm(memory, g_poly, constraint_length, num_bits_for_polynom):
+def build_trellis_fsm(memory, g_poly, num_bits_for_polynom):
     sum_memory = sum(memory)
     num_states = np.power(2, sum_memory)
     k          = 1      if (num_bits_for_polynom>0 and g_poly.ndim==1) else g_poly.shape[0]
+    n          = G.size if (num_bits_for_polynom>0 and g_poly.ndim==1) else g_poly.shape[1]
     num_inputs = np.power(2,k)
     num_bits   = sum_memory
 
@@ -480,7 +481,7 @@ for eb_n0 in Eb_N0_ls:
         if built_trellis == 0:
             trellis_next_state = np.zeros((num_states,num_inputs), dtype=int)
             trellis_outputs    = np.zeros((num_states,num_inputs, n), dtype=int)
-            trellis_next_state, trellis_outputs = build_trellis_fsm(memory, G, constraint_length, num_bits_for_polynom)
+            trellis_next_state, trellis_outputs = build_trellis_fsm(memory, G, num_bits_for_polynom)
             built_trellis = 1
             # print("trellis_states_fsm=\n", trellis_next_state)
             # print("trellis_outputs_fsm=\n", trellis_outputs)
@@ -546,10 +547,12 @@ for eb_n0 in Eb_N0_ls:
         # print("u_opt=", u_opt)
         u_opt = np.concatenate(u_opt)
         # print("u_opt_concatenated=", u_opt)
-        rx_opt_seq = np.array([int(x) for x in rx_opt_seq])
-        # print("rx_opt_seq=", rx_opt_seq)
+        
 
         ########## BPSK Demodulation ##########
+        # Getting rx_optimal sequence - used only for BPSK Demodulation - but not for BER Calculation
+        rx_opt_seq = np.array([int(x) for x in rx_opt_seq])
+        # print("rx_opt_seq=", rx_opt_seq)
         c_opt_seq = demod_bpsk(rx_opt_seq)
         c_opt_seq = np.array([int(x) for x in c_opt_seq])
         # print("c_opt_seq",c_opt_seq)
